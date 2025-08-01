@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{D0A1E664-48AA-C4B0-20C8-AE92A3A6877A}",
+	"EngineAssociation": "{B5D8968F-4D1C-36A9-E304-A681174A9739}",
 	"Category": "",
 	"Description": "",
 	"Plugins": [
@@ -13,6 +13,10 @@
 		},
 		{
 			"Name": "AngelscriptEnhancedInput",
+			"Enabled": true
+		},
+		{
+			"Name": "AngelscriptGAS",
 			"Enabled": true
 		}
 	]
