@@ -21,7 +21,7 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     }
 
     UFUNCTION()
-    void OnRep_ReplicationTrampoline(FAngelscriptGameplayAttributeData OldAttributeData)
+    void OnRep_ReplicationTrampoline(FAngelscriptGameplayAttributeData& OldAttributeData)
     {
         OnRep_Attribute(OldAttributeData);
     }
