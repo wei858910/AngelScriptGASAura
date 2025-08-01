@@ -1,15 +1,25 @@
 class AAuraPlayerController : APlayerController
 {
     UPROPERTY(Category = "输入")
-    UInputMappingContext AuraContext;
+    UInputMappingContext AuraContext = nullptr;
 
     UPROPERTY(Category = "输入")
-    UInputAction MoveAction;
+    UInputAction MoveAction = nullptr;
+
+    UEnhancedInputComponent MyInputComponent = nullptr;
 
     default bReplicates = true;
 
     UFUNCTION(BlueprintOverride)
     void BeginPlay()
+    {
+        if (GetEnhancedInput())
+        {
+            BindAllAction();
+        }
+    }
+
+    private bool GetEnhancedInput()
     {
         if (AuraContext != nullptr)
         {
@@ -23,21 +33,25 @@ class AAuraPlayerController : APlayerController
 
                 Widget::SetInputMode_GameAndUIEx(this, bHideCursorDuringCapture = false);
 
-                SetupInputComponent();
+                MyInputComponent = UEnhancedInputComponent::Create(this);
+                PushInputComponent(MyInputComponent);
+                return true;
             }
+        }
+
+        return false;
+    }
+
+    private void BindAllAction()
+    {
+        if (MyInputComponent != nullptr)
+        {
+            MyInputComponent.BindAction(MoveAction, ETriggerEvent::Triggered, FEnhancedInputActionHandlerDynamicSignature(this, n"Move"));
         }
     }
 
-    void SetupInputComponent()
-    {
-        auto MyInputComponent = UEnhancedInputComponent::Create(this);
-        PushInputComponent(MyInputComponent);
-
-        MyInputComponent.BindAction(MoveAction, ETriggerEvent::Triggered, FEnhancedInputActionHandlerDynamicSignature(this, n"Move"));
-    }
-
     UFUNCTION()
-    void Move(FInputActionValue ActionValue, float32 ElapsedTime, float32 TriggeredTime, const UInputAction SourceAction)
+    private void Move(FInputActionValue ActionValue, float32 ElapsedTime, float32 TriggeredTime, const UInputAction SourceAction)
     {
         FRotator ControllerRotation = GetControlRotation();
         ControllerRotation.Pitch = 0.f;
