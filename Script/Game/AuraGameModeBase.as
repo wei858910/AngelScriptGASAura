@@ -1,0 +1,3 @@
+class AAuraGameModeBase : AGameModeBase
+{
+};
