@@ -10,6 +10,9 @@ class AAuraPlayerController : APlayerController
 
     default bReplicates = true;
 
+    AAuraEnemy LastEnemy = nullptr;
+    AAuraEnemy ThisEnemy = nullptr;
+
     UFUNCTION(BlueprintOverride)
     void BeginPlay()
     {
@@ -19,6 +22,52 @@ class AAuraPlayerController : APlayerController
         }
     }
 
+    UFUNCTION(BlueprintOverride)
+    void Tick(float DeltaSeconds)
+    {
+        CursorTrace();
+    }
+
+    void CursorTrace()
+    {
+        FHitResult HitResult;
+        GetHitResultUnderCursorByChannel(ETraceTypeQuery::Visibility, false, HitResult);
+        if (!HitResult.GetbBlockingHit())
+        {
+            return;
+        }
+
+        LastEnemy = ThisEnemy;
+        ThisEnemy = Cast<AAuraEnemy>(HitResult.GetActor());
+
+        /*
+            Case	Last	This
+            #1		0		0
+            #2		1		0
+            #3		0		1
+            #4		1		1
+        */
+        if (LastEnemy != nullptr && ThisEnemy == nullptr)
+        {
+            LastEnemy.UnHightlight();
+        }
+
+        if (LastEnemy == nullptr && ThisEnemy != nullptr)
+        {
+            ThisEnemy.Hightlight();
+        }
+
+        if (LastEnemy != nullptr && ThisEnemy != nullptr)
+        {
+            if (LastEnemy != ThisEnemy)
+            {
+                LastEnemy.UnHightlight();
+                ThisEnemy.Hightlight();
+            }
+        }
+    }
+
+    // 输入相关
     private bool GetEnhancedInput()
     {
         if (AuraContext != nullptr)
@@ -64,4 +113,6 @@ class AAuraPlayerController : APlayerController
         MyControlledPawn.AddMovementInput(ControllerForwardVector, MoveValue.Y);
         MyControlledPawn.AddMovementInput(ControllerRightVector, MoveValue.X);
     }
+
+    // 输入相关 End
 };
