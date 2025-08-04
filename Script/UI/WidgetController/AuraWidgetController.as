@@ -32,7 +32,7 @@ class UAuraWidgetController : UObject
     UAuraAttributeSet AttributeSet;
 
     UFUNCTION()
-    void InitWidgetController(const FWidgetControllerParams& Params)
+    void SetWidgetControllerParams(const FWidgetControllerParams& Params)
     {
         PlayerController = Params.PlayerController;
         PlayerState = Params.PlayerState;

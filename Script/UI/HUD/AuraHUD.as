@@ -19,7 +19,7 @@ class AAuraHUD : AHUD
             OverlayWidgetController = NewObject(this, OverlayWidgetControllerClass);
             if (IsValid(OverlayWidgetController))
             {
-                OverlayWidgetController.InitWidgetController(WidgetControllerParams);
+                OverlayWidgetController.SetWidgetControllerParams(WidgetControllerParams);
             }
         }
         return OverlayWidgetController;
