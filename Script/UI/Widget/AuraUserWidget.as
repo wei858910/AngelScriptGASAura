@@ -1,10 +1,15 @@
 class UAuraUserWidget : UUserWidget
 {
     UPROPERTY(BlueprintReadOnly, Category = "UserWidget")
-    UObject WidgetController;
+    UAuraWidgetController WidgetController;
 
-    void SetWidgetController(UObject InWidgetController)
+    void SetWidgetController(UAuraWidgetController InWidgetController)
     {
         WidgetController = InWidgetController;
+        OnWidgetControllerSet();
+    }
+
+    void OnWidgetControllerSet()
+    {
     }
 };
