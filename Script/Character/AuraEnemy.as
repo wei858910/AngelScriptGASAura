@@ -17,4 +17,10 @@ class AAuraEnemy : AAuraCharacterBase
         Mesh.SetRenderCustomDepth(false);
         Weapon.SetRenderCustomDepth(false);
     }
+
+    UFUNCTION(BlueprintOverride)
+    void BeginPlay()
+    {
+        AbilitySystem.InitAbilityActorInfo(this, this);
+    }
 };
