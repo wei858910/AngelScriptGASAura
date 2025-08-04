@@ -25,4 +25,18 @@ class AAuraCharacter : AAuraCharacterBase
     default bUseControllerRotationPitch = false;
     default bUseControllerRotationYaw = false;
     default bUseControllerRotationRoll = false;
+
+    default AbilitySystem.SetIsReplicated(true);
+
+    UFUNCTION(BlueprintOverride)
+    void BeginPlay()
+    {
+    }
+
+    UFUNCTION(BlueprintOverride)
+    void Possessed(AController NewController)
+    {
+        AbilitySystem.InitAbilityActorInfo(this, this);
+    }
+
 };

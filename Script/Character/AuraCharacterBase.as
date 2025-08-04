@@ -4,11 +4,4 @@ class AAuraCharacterBase : AAngelscriptGASCharacter
     USkeletalMeshComponent Weapon;
 
     default Weapon.SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-    UFUNCTION(BlueprintOverride)
-    void BeginPlay()
-    {
-        AbilitySystem.RegisterAttributeSet(UAuraAttributeSet);
-        AbilitySystem.InitAbilityActorInfo(this, this);
-    }
 };

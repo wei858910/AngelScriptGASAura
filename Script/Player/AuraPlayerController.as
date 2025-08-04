@@ -1,4 +1,4 @@
-class AAuraPlayerController : APlayerController
+class AAuraPlayerController : AAuraPlayerControllerBase
 {
     UPROPERTY(Category = "输入")
     UInputMappingContext AuraContext = nullptr;
@@ -108,11 +108,26 @@ class AAuraPlayerController : APlayerController
         FVector ControllerForwardVector = ControllerRotation.GetForwardVector();
         FVector ControllerRightVector = ControllerRotation.GetRightVector();
 
-        APawn     MyControlledPawn = GetControlledPawn();
+        APawn MyControlledPawn = GetControlledPawn();
         FVector2D MoveValue = ActionValue.GetAxis2D();
         MyControlledPawn.AddMovementInput(ControllerForwardVector, MoveValue.Y);
         MyControlledPawn.AddMovementInput(ControllerRightVector, MoveValue.X);
     }
-
     // 输入相关 End
+
+    UFUNCTION(BlueprintOverride)
+    void OnAcknowledgePossession(APawn P)
+    {
+        AAuraCharacter AuraCharacter = Cast<AAuraCharacter>(P);
+        if (IsValid(AuraCharacter))
+        {
+            AuraCharacter.AbilitySystem.InitAbilityActorInfo(AuraCharacter, AuraCharacter);
+            UAuraAttributeSet AuraAttributeSet = Cast<UAuraAttributeSet>(AuraCharacter.AbilitySystem.RegisterAttributeSet(UAuraAttributeSet));
+            AAuraHUD AuraHUD = Cast<AAuraHUD>(GetHUD());
+            if (IsValid(AuraHUD))
+            {
+                AuraHUD.InitOverlay(this, PlayerState, AuraCharacter.AbilitySystem, AuraAttributeSet);
+            }
+        }
+    }
 };
