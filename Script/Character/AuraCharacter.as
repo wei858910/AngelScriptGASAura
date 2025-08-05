@@ -37,6 +37,7 @@ class AAuraCharacter : AAuraCharacterBase
     void Possessed(AController NewController)
     {
         AbilitySystem.InitAbilityActorInfo(this, this);
+        AbilitySystem.RegisterAttributeSet(UAuraAttributeSet);
     }
 
 };
