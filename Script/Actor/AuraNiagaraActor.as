@@ -23,13 +23,19 @@ class AAuraNiagaraActor : AActor
     UFUNCTION(BlueprintOverride)
     void ActorBeginOverlap(AActor OtherActor)
     {
-        EffectHandle = AuraUtil::ApplyGameEffect(this, OtherActor, GameplayEffectClass);
+        if (HasAuthority())
+        {
+            EffectHandle = AuraUtil::ApplyGameEffect(this, OtherActor, GameplayEffectClass);
+        }
     }
 
     UFUNCTION(BlueprintOverride)
     void ActorEndOverlap(AActor OtherActor)
     {
-        AuraUtil::RemoveGameplayEffect(OtherActor, EffectHandle);
-        EffectHandle = AuraConst::EmptyEffectHandle;
+        if (HasAuthority())
+        {
+            AuraUtil::RemoveGameplayEffect(OtherActor, EffectHandle);
+            EffectHandle = AuraConst::EmptyEffectHandle;
+        }
     }
 };

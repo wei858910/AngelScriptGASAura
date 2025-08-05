@@ -15,7 +15,12 @@ class AAuraEffectActor : AActor
     UFUNCTION(BlueprintOverride)
     void ActorBeginOverlap(AActor OtherActor)
     {
-        AuraUtil::ApplyGameEffect(this, OtherActor, GameplayEffectClass);
+        if (HasAuthority())
+        {
+            AuraUtil::ApplyGameEffect(this, OtherActor, GameplayEffectClass);
+            DestroyActor();
+        }
+
         DestroyActor();
     }
 };
