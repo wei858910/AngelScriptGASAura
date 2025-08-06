@@ -28,6 +28,8 @@ class AAuraCharacter : AAuraCharacterBase
 
     default AbilitySystem.SetIsReplicated(true);
 
+    default AbilitySystem.SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+
     UFUNCTION(BlueprintOverride)
     void BeginPlay()
     {
@@ -39,5 +41,4 @@ class AAuraCharacter : AAuraCharacterBase
         AbilitySystem.InitAbilityActorInfo(this, this);
         AbilitySystem.RegisterAttributeSet(UAuraAttributeSet);
     }
-
 };

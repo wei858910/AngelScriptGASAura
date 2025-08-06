@@ -4,6 +4,9 @@ class AAuraEnemy : AAuraCharacterBase
 
     default Mesh.SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 
+    default AbilitySystem.SetIsReplicated(true);
+    default AbilitySystem.SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
     void Hightlight()
     {
         Mesh.SetRenderCustomDepth(true);
