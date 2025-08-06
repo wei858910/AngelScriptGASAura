@@ -6,8 +6,12 @@ namespace AuraAttributes
     const FName MaxMana = n"MaxMana";
 } // namespace AuraAttributes
 
+event void FOnGameplayEffectApplied(FGameplayEffectSpec EffectSpec, FGameplayModifierEvaluatedData EvaluatedData, UAngelscriptAbilitySystemComponent TargetASC);
+
 class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
 {
+    // Attributes
+
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ReplicationTrampoline, Category = "重要属性")
     FAngelscriptGameplayAttributeData Health; // 天使脚本游戏属性数据
 
@@ -20,6 +24,9 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ReplicationTrampoline, Category = "重要属性")
     FAngelscriptGameplayAttributeData MaxMana;
 
+    FOnGameplayEffectApplied OnGameplayEffectAppliedEvent;
+
+    // Functions
     UAuraAttributeSet()
     {
         Health.Initialize(100);
@@ -69,6 +76,10 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
         Print(f"PostGameplayEffectExecute: {EffectSpec.GetLevel()}");
         FEffectProperties Props;
         GetEffectProperties(Props, EffectSpec, TargetASC);
+
+        // This event is broadcasted by OnGameplayEffectAppliedDelegateToSelf.Brocast() in the course.
+        // Because there is no OnGameplayEffectAppliedDelegateToSelf in the Angelscript, so I just call this function via PostGameplayEffectExecute.
+        OnGameplayEffectAppliedEvent.Broadcast(EffectSpec, EvaluatedData, TargetASC);
     }
 
     void GetEffectProperties(FEffectProperties& Props, FGameplayEffectSpec EffectSpec, UAngelscriptAbilitySystemComponent TargetASC)
