@@ -12,12 +12,16 @@ class AAuraEffectActor : AActor
     UPROPERTY()
     TSubclassOf<UGameplayEffect> GameplayEffectClass;
 
+    // The level of the actor, used to determine the level of the gameplay effect
+	UPROPERTY()
+	float32 ActorLevel = 1;
+
     UFUNCTION(BlueprintOverride)
     void ActorBeginOverlap(AActor OtherActor)
     {
         if (HasAuthority())
         {
-            AuraUtil::ApplyGameEffect(this, OtherActor, GameplayEffectClass);
+            AuraUtil::ApplyGameEffect(this, OtherActor, GameplayEffectClass, ActorLevel);
             DestroyActor();
         }
 
