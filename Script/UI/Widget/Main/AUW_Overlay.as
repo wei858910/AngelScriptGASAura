@@ -64,7 +64,7 @@ class UAUW_Overlay : UAuraUserWidget
             float32 Health = GetAttributeValue(AuraAttributes::Health);
             float32 MaxHealth = GetAttributeValue(AuraAttributes::MaxHealth);
 
-            WBP_GlobeHealth.GlobeProgressBar.SetPercent(Health / MaxHealth);
+            WBP_GlobeHealth.GlobeProgressBar.SetPercent(AuraUtil::SafeDivide(Health, MaxHealth));
         }
 
         if (IsValid(WBP_GlobeMana))
@@ -72,7 +72,7 @@ class UAUW_Overlay : UAuraUserWidget
             float32 Mana = GetAttributeValue(AuraAttributes::Mana);
             float32 MaxMana = GetAttributeValue(AuraAttributes::MaxMana);
 
-            WBP_GlobeMana.GlobeProgressBar.SetPercent(Mana / MaxMana);
+            WBP_GlobeMana.GlobeProgressBar.SetPercent(AuraUtil::SafeDivide(Mana, MaxMana));
         }
     }
 };

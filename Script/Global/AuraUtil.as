@@ -51,4 +51,9 @@ namespace AuraUtil
         return TargetASC.RemoveActiveGameplayEffect(EffectHandle, StacksToRemove);
     }
 
+    float SafeDivide(float A, float B)
+    {
+        return (B != 0.0f) ? (A / B) : 0.0f;
+    }
+
 } // namespace AuraUtil
