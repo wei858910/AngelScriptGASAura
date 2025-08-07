@@ -46,6 +46,9 @@ class UOverlayWidgetController : UAuraWidgetController
         PickupMsgWidget.PickupItem_Icon.SetBrushFromTexture(DataItem.Icon);
         FText Text = FText::FromString(f"Picked up a {DataItem.Name}");
         PickupMsgWidget.PickupItem_Msg.SetText(Text);
+        int SizeX = 0, SizeY = 0;
+        PlayerController.GetViewportSize(SizeX, SizeY);
+        PickupMsgWidget.SetPositionInViewport(FVector2D(float(SizeX) / 2, float(SizeY) / 2));
         PickupMsgWidget.AddToViewport();
     }
 };
