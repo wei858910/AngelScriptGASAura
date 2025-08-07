@@ -29,9 +29,9 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     // Functions
     UAuraAttributeSet()
     {
-        Health.Initialize(100);
+        Health.Initialize(30);
         MaxHealth.Initialize(100);
-        Mana.Initialize(50);
+        Mana.Initialize(10);
         MaxMana.Initialize(50);
     }
 
