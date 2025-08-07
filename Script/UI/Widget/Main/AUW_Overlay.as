@@ -11,11 +11,12 @@ class UAUW_Overlay : UAuraUserWidget
     UFUNCTION(BlueprintOverride)
     void Construct()
     {
-        if (IsValid(WBP_GlobeMana) && IsValid(WBP_GlobeMana.GlobeProgressBar))
+        if (IsValid(WBP_GlobeMana) && IsValid(WBP_GlobeMana.ProgressBar_Main))
+
         {
-            FProgressBarStyle ProgressBarStyle = WBP_GlobeMana.GlobeProgressBar.WidgetStyle;
+            FProgressBarStyle ProgressBarStyle = WBP_GlobeMana.ProgressBar_Main.WidgetStyle;
             ProgressBarStyle.FillImage.ResourceObject = LoadObject(this, "/Game/Assets/UI/Globes/MI_ManaGlobe");
-            WBP_GlobeMana.GlobeProgressBar.SetWidgetStyle(ProgressBarStyle);
+            WBP_GlobeMana.ProgressBar_Main.SetWidgetStyle(ProgressBarStyle);
         }
     }
 
@@ -64,7 +65,7 @@ class UAUW_Overlay : UAuraUserWidget
             float32 Health = GetAttributeValue(AuraAttributes::Health);
             float32 MaxHealth = GetAttributeValue(AuraAttributes::MaxHealth);
 
-            WBP_GlobeHealth.GlobeProgressBar.SetPercent(AuraUtil::SafeDivide(Health, MaxHealth));
+            WBP_GlobeHealth.SetPercent(Health, MaxHealth);
         }
 
         if (IsValid(WBP_GlobeMana))
@@ -72,7 +73,7 @@ class UAUW_Overlay : UAuraUserWidget
             float32 Mana = GetAttributeValue(AuraAttributes::Mana);
             float32 MaxMana = GetAttributeValue(AuraAttributes::MaxMana);
 
-            WBP_GlobeMana.GlobeProgressBar.SetPercent(AuraUtil::SafeDivide(Mana, MaxMana));
+            WBP_GlobeMana.SetPercent(Mana, MaxMana);
         }
     }
 };

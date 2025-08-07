@@ -56,4 +56,9 @@ namespace AuraUtil
         return (B != 0.0f) ? (A / B) : 0.0f;
     }
 
+    float32 SafeDivide(float32 A, float32 B)
+    {
+        return (B != 0.0f) ? (A / B) : 0.0f;
+    }
+
 } // namespace AuraUtil
