@@ -6,6 +6,9 @@ class UAUW_Overlay : UAuraUserWidget
     UPROPERTY(BindWidget)
     UAUW_GlobeProgressBar WBP_GlobeMana;
 
+    UPROPERTY(BindWidget)
+	UAUW_Button WBP_WideButton_Attributes;
+
     TMap<FName, float32> CachedAttributeValues;
 
     UFUNCTION(BlueprintOverride)
@@ -17,6 +20,21 @@ class UAUW_Overlay : UAuraUserWidget
             FProgressBarStyle ProgressBarStyle = WBP_GlobeMana.ProgressBar_Main.WidgetStyle;
             ProgressBarStyle.FillImage.ResourceObject = LoadObject(this, "/Game/Assets/UI/Globes/MI_ManaGlobe");
             WBP_GlobeMana.ProgressBar_Main.SetWidgetStyle(ProgressBarStyle);
+        }
+
+        if(IsValid(WBP_WideButton_Attributes))
+        {
+            WBP_WideButton_Attributes.Button.OnClicked.AddUFunction(this, n"OnButton_AttributesClicked");
+        }
+    }
+
+    UFUNCTION()
+    private void OnButton_AttributesClicked()
+    {
+        UAUW_AttributeMenu AttributeMenu = Cast<UAUW_AttributeMenu>(WidgetUtil::OpenWidget(n"AttributeMenu", WidgetController.PlayerController, FVector2D(30.f, 30.f)));
+        if(IsValid(AttributeMenu))
+        {
+            WBP_WideButton_Attributes.SetIsEnabled(false);
         }
     }
 

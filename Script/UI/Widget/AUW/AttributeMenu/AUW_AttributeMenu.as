@@ -1,5 +1,7 @@
 class UAUW_AttributeMenu : UAuraUserWidget
 {
+	// ------------------------ Bind Widgets ------------------------
+
 	UPROPERTY(BindWidget)
 	UAUW_TextValueRow WBP_AttributePoints;
 
@@ -54,10 +56,22 @@ class UAUW_AttributeMenu : UAuraUserWidget
 	// UPROPERTY(BindWidget)
 	// UAUW_VitalProgress WBP_Mana;
 
+	UPROPERTY(BindWidget)
+	UAUW_Button WBP_Button_Close;
+
+	// ------------------------ Functions ------------------------
+
 	UFUNCTION(BlueprintOverride)
 	void OnInitialized()
 	{
 		Update();
+		WBP_Button_Close.Button.OnClicked.AddUFunction(this, n"OnButton_CloseClicked");
+	}
+
+	UFUNCTION()
+	private void OnButton_CloseClicked()
+	{
+		RemoveFromParent();
 	}
 
 	void Update()
