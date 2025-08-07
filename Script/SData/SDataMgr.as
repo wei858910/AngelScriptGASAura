@@ -1,6 +1,8 @@
 class USDataMgr : UObject
 {
-    private TMap<EItemID, FSDataItem> ItemMap;
+    TMap<EItemID, FSDataItem> ItemMap;
+
+    UDataTable WidgetClassesTable;
 
     void Init()
     {
@@ -12,25 +14,7 @@ class USDataMgr : UObject
         {
             ItemMap.Add(Item.ItemID, Item);
         }
-    }
 
-    FSDataItem GetItem(EItemID ItemID)
-    {
-        return ItemMap[ItemID];
+        WidgetClassesTable = Cast<UDataTable>(LoadObject(this, "/Game/SData/DT_SData_WidgetClass.DT_SData_WidgetClass"));
     }
 };
-
-namespace SData
-{
-    USDataMgr GetDataMgr()
-    {
-        UAuraGameInstanceSubsystem Subsystem = UAuraGameInstanceSubsystem::Get();
-        return Subsystem.SDataMgr;
-    }
-
-    FSDataItem GetItem(EItemID ItemID)
-    {
-        return GetDataMgr().GetItem(ItemID);
-    }
-
-} // namespace SData

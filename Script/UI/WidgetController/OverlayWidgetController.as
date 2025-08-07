@@ -4,6 +4,8 @@ class UOverlayWidgetController : UAuraWidgetController
     {
         Super::OnWidgetControllerParamsSet(Params);
         AttributeSet.OnGameplayEffectAppliedEvent.AddUFunction(this, n"OnGameplayEffectApplied");
+
+        RegisterAllWidgetEvent();
     }
 
     UFUNCTION()
@@ -14,5 +16,36 @@ class UOverlayWidgetController : UAuraWidgetController
         {
             Print(f"OnEffectApplied: {Tag.ToString()}");
         }
+    }
+
+    void RegisterAllWidgetEvent()
+    {
+        UAuraEventMgr EventMgr = UAuraGameInstanceSubsystem::Get().EventMgr;
+        EventMgr.OnItemPickedUpEvent.AddUFunction(this, n"OnItemPickedUp");
+    }
+
+    UFUNCTION()
+    private void OnItemPickedUp(EItemID ItemID)
+    {
+        FSDataItem DataItem = SData::GetItem(ItemID);
+        if (DataItem.ItemID == EItemID::None)
+        {
+            Print(f"OnItemPickedUp: {ItemID}");
+            return;
+        }
+
+        TSubclassOf<UUserWidget> WidgetClass = SData::GetWidgetClass(n"PickupMsg");
+
+        auto PickupMsgWidget = Cast<UAUW_PickupMsg>(WidgetBlueprint::CreateWidget(WidgetClass, PlayerController));
+        if (PickupMsgWidget == nullptr)
+        {
+            Print("Failed to create PickupMsgWidget");
+            return;
+        }
+
+        PickupMsgWidget.PickupItem_Icon.SetBrushFromTexture(DataItem.Icon);
+        FText Text = FText::FromString(f"Picked up a {DataItem.Name}");
+        PickupMsgWidget.PickupItem_Msg.SetText(Text);
+        PickupMsgWidget.AddToViewport();
     }
 };

@@ -24,9 +24,10 @@ class AAuraEffectActor : AActor
         {
             FSDataItem DataItem = SData::GetItem(ItemID);
             AuraUtil::ApplyGameEffect(this, OtherActor, DataItem.GameplayEffectClass, ActorLevel);
+
             DestroyActor();
         }
-
+        UAuraGameInstanceSubsystem::Get().EventMgr.OnItemPickedUpEvent.Broadcast(ItemID);
         DestroyActor();
     }
 };
