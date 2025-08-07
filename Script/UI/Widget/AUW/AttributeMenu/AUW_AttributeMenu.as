@@ -71,7 +71,7 @@ class UAUW_AttributeMenu : UAuraUserWidget
 	UFUNCTION()
 	private void OnButton_CloseClicked()
 	{
-		RemoveFromParent();
+		WidgetUtil::CloseWidget(this);
 	}
 
 	void Update()

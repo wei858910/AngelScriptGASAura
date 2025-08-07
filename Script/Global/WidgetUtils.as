@@ -25,15 +25,17 @@ namespace WidgetUtil
 		}
 
 		UserWidget.AddToViewport();
+        UAuraGameInstanceSubsystem::Get().EventMgr.OnWidgetOpenedEvent.Broadcast(UserWidget);
 		return UserWidget;
 	}
 
-	void CloseWidget(UUserWidget Widget)
+	void CloseWidget(UUserWidget ClosedWidget)
 	{
-		// if (IsValid(Widget))
-		// {
-		// 	Widget.RemoveFromParent();
-		// }
+		if (IsValid(ClosedWidget))
+		{
+            UAuraGameInstanceSubsystem::Get().EventMgr.OnWidgetClosedEvent.Broadcast(ClosedWidget);
+			ClosedWidget.RemoveFromParent();
+		}
 	}
 
 	FVector2D GetViewportPositionByRatio(APlayerController PlayerController, float32 PositionRatio)
