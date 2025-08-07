@@ -1,10 +1,10 @@
 namespace AuraAttributes
 {
     // Primary Attributes
-    const FName Strength = n"Strength";        // 力量
-    const FName Intelligence = n"Intellignce"; // 智力
-    const FName Resilience = n"Resilience";    // 抗性
-    const FName Vigor = n"Vigor";              // 精力
+    const FName Strength = n"Strength";         // 力量
+    const FName Intelligence = n"Intelligence"; // 智力
+    const FName Resilience = n"Resilience";     // 抗性
+    const FName Vigor = n"Vigor";               // 精力
 
     // Secondary Attributes
 
@@ -97,6 +97,26 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     // Functions
     UAuraAttributeSet()
     {
+        Strength.Initialize(10.f);
+        Intelligence.Initialize(10.f);
+        Resilience.Initialize(10.f);
+        Vigor.Initialize(10.f);
+
+        Armor.Initialize(10.f);
+        ArmorPenetration.Initialize(10.f);
+        BlockChance.Initialize(10.f);
+
+        CriticalHitChance.Initialize(10.f);
+        CriticalHitDamage.Initialize(10.f);
+        CriticalHitResistance.Initialize(10.f);
+
+        Health.Initialize(30.f);
+        MaxHealth.Initialize(100.f);
+        HealthRegen.Initialize(10.f);
+        Mana.Initialize(30.f);
+        MaxMana.Initialize(100.f);
+        ManaRegen.Initialize(10.f);
+
         // Primary Attributes
         AttributeMap.Add(AuraAttributes::Strength, Strength);
         AttributeMap.Add(AuraAttributes::Intelligence, Intelligence);

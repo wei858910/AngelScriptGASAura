@@ -6,10 +6,6 @@ class AAuraCharacter : AAuraCharacterBase
     UPROPERTY(DefaultComponent, Attach = SpringArm)
     UCameraComponent Camera;
 
-    UPROPERTY(Category = "属性")
-    TSubclassOf<UGameplayEffect> InitDefaultAttributesClass; // 初始化属性的 GE
-
-
     default Camera.bUsePawnControlRotation = false;
 
     default SpringArm.SetRelativeRotation(FRotator(-45, 0, 0));
@@ -37,10 +33,6 @@ class AAuraCharacter : AAuraCharacterBase
     UFUNCTION(BlueprintOverride)
     void BeginPlay()
     {
-        if(IsValid(InitDefaultAttributesClass))
-        {
-            AuraUtil::ApplyGameEffect(this, this, InitDefaultAttributesClass);
-        }
     }
 
     UFUNCTION(BlueprintOverride)
