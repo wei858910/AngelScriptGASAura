@@ -103,6 +103,9 @@ class UAUW_GlobeProgressBar : UAuraUserWidget
     UFUNCTION(BlueprintOverride)
     void OnMouseLeave(FPointerEvent MouseEvent)
     {
-        Text_Value.SetVisibility(ESlateVisibility::Collapsed);
+        if (!MouseEvent.GetEffectingButton().IsValid())
+        {
+            Text_Value.SetVisibility(ESlateVisibility::Collapsed);
+        }
     }
 };
