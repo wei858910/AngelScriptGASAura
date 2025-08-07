@@ -41,7 +41,7 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
         OnRep_Attribute(OldAttributeData);
     }
 
-    const FAngelscriptGameplayAttributeData& GetAttribute(FName AttributeName)
+    FAngelscriptGameplayAttributeData& GetAttribute(FName AttributeName)
     {
         if (AttributeName == AuraAttributes::Health)
             return Health;
@@ -60,6 +60,11 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     UFUNCTION(BlueprintOverride)
     void PreAttributeChange(FGameplayAttribute Attribute, float32& NewValue)
     {
+        ClampAttribute(Attribute, NewValue);
+    }
+
+    void ClampAttribute(FGameplayAttribute Attribute, float32& NewValue)
+    {
         if (Attribute.AttributeName == AuraAttributes::Health)
         {
             NewValue = Math::Clamp(NewValue, float32(0), MaxHealth.GetCurrentValue());
@@ -73,6 +78,15 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     UFUNCTION(BlueprintOverride)
     void PostGameplayEffectExecute(FGameplayEffectSpec EffectSpec, FGameplayModifierEvaluatedData& EvaluatedData, UAngelscriptAbilitySystemComponent TargetASC)
     {
+        auto& Attribute = GetAttribute(FName(EvaluatedData.Attribute.AttributeName));
+        float32 BaseValue = Attribute.GetBaseValue();
+        ClampAttribute(EvaluatedData.Attribute, BaseValue);
+
+        if (BaseValue != Attribute.GetBaseValue())
+        {
+            Attribute.SetBaseValue(BaseValue);
+        }
+
         Print(f"PostGameplayEffectExecute: {EffectSpec.GetLevel()}");
         FEffectProperties Props;
         GetEffectProperties(Props, EffectSpec, TargetASC);
