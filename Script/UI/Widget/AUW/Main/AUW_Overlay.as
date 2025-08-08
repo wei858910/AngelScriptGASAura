@@ -25,7 +25,8 @@ class UAUW_Overlay : UAuraUserWidget
 		if (IsValid(WBP_WideButton_Attributes))
 		{
 			WBP_WideButton_Attributes.Button.OnClicked.AddUFunction(this, n"OnButton_AttributesClicked");
-			UAuraGameInstanceSubsystem::Get().EventMgr.OnWidgetClosedEvent.AddUFunction(this, n"OnAttributeMenuClosed");
+			AuraUtil::GameInstance().EventMgr.OnWidgetClosedEvent.AddUFunction(this, n"OnAttributeMenuClosed");
+
 		}
 	}
 

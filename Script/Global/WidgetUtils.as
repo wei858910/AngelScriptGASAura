@@ -25,7 +25,8 @@ namespace WidgetUtil
 		}
 
 		UserWidget.AddToViewport();
-        UAuraGameInstanceSubsystem::Get().EventMgr.OnWidgetOpenedEvent.Broadcast(UserWidget);
+        AuraUtil::GameInstance().EventMgr.OnWidgetOpenedEvent.Broadcast(UserWidget);
+
 		return UserWidget;
 	}
 
@@ -33,7 +34,8 @@ namespace WidgetUtil
 	{
 		if (IsValid(ClosedWidget))
 		{
-            UAuraGameInstanceSubsystem::Get().EventMgr.OnWidgetClosedEvent.Broadcast(ClosedWidget);
+            AuraUtil::GameInstance().EventMgr.OnWidgetClosedEvent.Broadcast(ClosedWidget);
+
 			ClosedWidget.RemoveFromParent();
 		}
 	}

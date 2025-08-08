@@ -61,4 +61,9 @@ namespace AuraUtil
         return (B != 0.0f) ? (A / B) : 0.0f;
     }
 
+    UAuraGameInstanceSubsystem GameInstance()
+    {
+        return UAuraGameInstanceSubsystem::Get();
+    }
+
 } // namespace AuraUtil

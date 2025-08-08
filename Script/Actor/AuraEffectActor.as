@@ -27,7 +27,8 @@ class AAuraEffectActor : AActor
 
             DestroyActor();
         }
-        UAuraGameInstanceSubsystem::Get().EventMgr.OnItemPickedUpEvent.Broadcast(ItemID);
+        AuraUtil::GameInstance().EventMgr.OnItemPickedUpEvent.Broadcast(ItemID);
+        
         DestroyActor();
     }
 };
