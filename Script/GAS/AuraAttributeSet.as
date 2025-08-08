@@ -101,10 +101,10 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
 	// Functions
 	UAuraAttributeSet()
 	{
-		Strength.Initialize(10.f);
-		Intelligence.Initialize(10.f);
-		Resilience.Initialize(10.f);
-		Vigor.Initialize(10.f);
+		// Strength.Initialize(10.f);
+		// Intelligence.Initialize(10.f);
+		// Resilience.Initialize(10.f);
+		// Vigor.Initialize(10.f);
 
 		Armor.Initialize(10.f);
 		ArmorPenetration.Initialize(10.f);
