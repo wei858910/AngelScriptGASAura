@@ -123,6 +123,7 @@ class AAuraPlayerController : AAuraPlayerControllerBase
         {
             AuraCharacter.AbilitySystem.InitAbilityActorInfo(AuraCharacter, AuraCharacter);
             UAuraAttributeSet AuraAttributeSet = Cast<UAuraAttributeSet>(AuraCharacter.AbilitySystem.RegisterAttributeSet(UAuraAttributeSet));
+            AuraCharacter.InitializePrimaryAttributes();
             AAuraHUD AuraHUD = Cast<AAuraHUD>(GetHUD());
             if (IsValid(AuraHUD))
             {
