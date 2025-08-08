@@ -41,5 +41,6 @@ class AAuraCharacter : AAuraCharacterBase
         AbilitySystem.InitAbilityActorInfo(this, this);
         AbilitySystem.RegisterAttributeSet(UAuraAttributeSet);
         InitializePrimaryAttributes();
+        InitializeSecondaryAttributes();
     }
 };

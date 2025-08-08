@@ -6,13 +6,25 @@ class AAuraCharacterBase : AAngelscriptGASCharacter
     default Weapon.SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
     UPROPERTY(Category = "Attributes")
-    TSubclassOf<UGameplayEffect> AuraPrimaryEffectClass;
+    TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+
+    UPROPERTY(Category = "Attributes")
+    TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
 
     void InitializePrimaryAttributes()
     {
-        if (IsValid(AuraPrimaryEffectClass))
+        if (IsValid(DefaultPrimaryAttributes))
         {
-            AuraUtil::ApplyGameEffect(this, this, AuraPrimaryEffectClass, 1);
+            AuraUtil::ApplyGameEffect(this, this, DefaultPrimaryAttributes, 1);
         }
     }
+
+    void InitializeSecondaryAttributes()
+    {
+        if (IsValid(DefaultSecondaryAttributes))
+        {
+            AuraUtil::ApplyGameEffect(this, this, DefaultSecondaryAttributes, 1);
+        }
+    }
+
 };
