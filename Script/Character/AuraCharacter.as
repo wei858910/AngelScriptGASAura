@@ -6,6 +6,12 @@ class AAuraCharacter : AAuraCharacterBase
     UPROPERTY(DefaultComponent, Attach = SpringArm)
     UCameraComponent Camera;
 
+    UPROPERTY(DefaultComponent)
+    UCombatComponent CombatComponent;
+
+    UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
+    int32 Level = 1; // 角色等级
+
     default Camera.bUsePawnControlRotation = false;
 
     default SpringArm.SetRelativeRotation(FRotator(-45, 0, 0));
@@ -43,4 +49,17 @@ class AAuraCharacter : AAuraCharacterBase
         InitializePrimaryAttributes();
         InitializeSecondaryAttributes();
     }
+
+    UFUNCTION()
+    void OnRep_Level(int32 OldLevel)
+    {
+
+    }
+
+    int32 GetPlayerLevel()
+    {
+        return Level;
+    }
+
+
 };

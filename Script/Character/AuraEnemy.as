@@ -1,5 +1,11 @@
 class AAuraEnemy : AAuraCharacterBase
 {
+    UPROPERTY(DefaultComponent)
+    UCombatComponent CombatComponent;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+    protected int32 Level = 1; // 角色等级
+
     int32 CUSTOM_DEPTH_RED = 250;
 
     default Mesh.SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
@@ -25,5 +31,10 @@ class AAuraEnemy : AAuraCharacterBase
     void BeginPlay()
     {
         AbilitySystem.InitAbilityActorInfo(this, this);
+    }
+
+    int32 GetPlayerLevel()
+    {
+        return Level;
     }
 };
