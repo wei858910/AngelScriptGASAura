@@ -65,6 +65,8 @@ class UAUW_AttributeMenu : UAuraUserWidget
 	void InitWidgetsInfo()
 	{
 		WBP_AttributePoints.Text_Text.SetText(FText::FromString("属性点"));
+		WBP_Button_Close.Text.SetText(FText::FromString("x"));
+
 	}
 
 	void OnWidgetControllerSet() override
