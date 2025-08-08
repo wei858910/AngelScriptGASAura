@@ -2,12 +2,14 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "GameplayModMagnitudeCalculation.h"
+#include "EntitySystem/MovieSceneEntitySystemRunner.h"
 #include "UObject/Object.h"
 
 #include "AuraAbilitySystemComponent.generated.h"
 
 UCLASS(Meta = (ScriptMixin = "UAbilitySystemComponent"))
-class AURA_API UAngelScriptProgressBar : public UObject
+class AURA_API UAuraAbilitySystemComponent : public UObject
 {
     GENERATED_BODY()
 
