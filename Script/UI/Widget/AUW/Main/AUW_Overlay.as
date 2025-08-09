@@ -60,6 +60,31 @@ class UAUW_Overlay : UAuraUserWidget
     {
         if (NewAttributeSet.IsA(UAuraAttributeSet))
         {
+            // Primary Attributes
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Strength);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Intelligence);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Resilience);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Vigor);
+
+            // Defense Attributes
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Armor);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::ArmorPenetration);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::BlockChance);
+
+            // Attack Attributes
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::CriticalHitChance);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::CriticalHitDamage);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::CriticalHitResistance);
+
+            // Vital Attributes
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Health);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::MaxHealth);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::HealthRegen);
+
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::Mana);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::MaxMana);
+            WidgetController.AbilitySystemComponent.RegisterCallbackForAttribute(UAuraAttributeSet, AuraAttributes::ManaRegen);
+
             WidgetController.AbilitySystemComponent.OnAttributeChanged.AddUFunction(this, n"OnAuraAttributeChanged");
         }
 
@@ -75,12 +100,7 @@ class UAUW_Overlay : UAuraUserWidget
 
     float32 GetAttributeValue(FName AttributeName)
     {
-        if (CachedAttributeValues.Contains(AttributeName))
-        {
-            return CachedAttributeValues[AttributeName];
-        }
-
-        return WidgetController.AttributeSet.GetAttribute(AttributeName).GetCurrentValue();
+        return WidgetController.AbilitySystemComponent.GetAttributeCurrentValue(UAuraAttributeSet, AttributeName);
     }
 
     void UpdateWidgets()
