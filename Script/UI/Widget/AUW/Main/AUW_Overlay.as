@@ -9,8 +9,6 @@ class UAUW_Overlay : UAuraUserWidget
     UPROPERTY(BindWidget)
     UAUW_Button WBP_WideButton_Attributes;
 
-    TMap<FName, float32> CachedAttributeValues;
-
     UFUNCTION(BlueprintOverride)
     void Construct()
     {
@@ -94,7 +92,6 @@ class UAUW_Overlay : UAuraUserWidget
     UFUNCTION()
     private void OnAuraAttributeChanged(const FAngelscriptModifiedAttribute&in AttributeChangeData)
     {
-        CachedAttributeValues.Add(AttributeChangeData.Name, AttributeChangeData.NewValue);
         UpdateWidgets();
     }
 
