@@ -1,8 +1,5 @@
 class AAuraEnemy : AAuraCharacterBase
 {
-    UPROPERTY(DefaultComponent)
-    UCombatComponent CombatComponent;
-
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
     protected int32 Level = 1; // 角色等级
 

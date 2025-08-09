@@ -6,9 +6,6 @@ class AAuraCharacter : AAuraCharacterBase
     UPROPERTY(DefaultComponent, Attach = SpringArm)
     UCameraComponent Camera;
 
-    UPROPERTY(DefaultComponent)
-    UCombatComponent CombatComponent;
-
     UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
     int32 Level = 1; // 角色等级
 
@@ -53,13 +50,10 @@ class AAuraCharacter : AAuraCharacterBase
     UFUNCTION()
     void OnRep_Level(int32 OldLevel)
     {
-
     }
 
     int32 GetPlayerLevel()
     {
         return Level;
     }
-
-
 };

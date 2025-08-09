@@ -1,5 +1,8 @@
 class AAuraCharacterBase : AAngelscriptGASCharacter
 {
+    UPROPERTY(DefaultComponent)
+    UCombatComponent CombatComponent;
+    
     UPROPERTY(DefaultComponent, Category = "Combat", Attach = CharacterMesh0, AttachSocket = WeaponHandSocket)
     USkeletalMeshComponent Weapon;
 
@@ -23,7 +26,7 @@ class AAuraCharacterBase : AAngelscriptGASCharacter
     {
         if (IsValid(DefaultSecondaryAttributes))
         {
-            AuraUtil::ApplyGameEffect(this, this, DefaultSecondaryAttributes, 1);
+            AuraUtil::ApplyGameEffect(this, this, DefaultSecondaryAttributes);
         }
     }
 
