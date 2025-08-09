@@ -87,72 +87,10 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ReplicationTrampoline, Category = "Vital Attributes")
     FAngelscriptGameplayAttributeData ManaRegen;
 
-    // Varibles
-    private TArray<FAngelscriptGameplayAttributeData> PrimaryAttributes;
-    private TArray<FAngelscriptGameplayAttributeData> SecondaryAttributes;
-    private TArray<FAngelscriptGameplayAttributeData> VitalAttributes;
-    private TMap<FName, FAngelscriptGameplayAttributeData> AttributeMap;
-
     // ======================================================================================================
 
     // Events
     FOnGameplayEffectApplied OnGameplayEffectAppliedEvent;
-
-    // Functions
-    UAuraAttributeSet()
-    {
-        InitAttributeArray();
-        InitAttributeMap();
-    }
-
-    void InitAttributeArray()
-    {
-        PrimaryAttributes.Add(Strength);
-        PrimaryAttributes.Add(Intelligence);
-        PrimaryAttributes.Add(Resilience);
-        PrimaryAttributes.Add(Vigor);
-
-        SecondaryAttributes.Add(Armor);
-        SecondaryAttributes.Add(ArmorPenetration);
-        SecondaryAttributes.Add(BlockChance);
-        SecondaryAttributes.Add(CriticalHitChance);
-        SecondaryAttributes.Add(CriticalHitDamage);
-        SecondaryAttributes.Add(CriticalHitResistance);
-        SecondaryAttributes.Add(MaxHealth);
-        SecondaryAttributes.Add(HealthRegen);
-        SecondaryAttributes.Add(MaxMana);
-        SecondaryAttributes.Add(ManaRegen);
-
-        VitalAttributes.Add(Health);
-        VitalAttributes.Add(Mana);
-    }
-
-    void InitAttributeMap()
-    {
-        // Primary Attributes
-        AttributeMap.Add(AuraAttributes::Strength, Strength);
-        AttributeMap.Add(AuraAttributes::Intelligence, Intelligence);
-        AttributeMap.Add(AuraAttributes::Resilience, Resilience);
-        AttributeMap.Add(AuraAttributes::Vigor, Vigor);
-
-        // Defense Attributes
-        AttributeMap.Add(AuraAttributes::Armor, Armor);
-        AttributeMap.Add(AuraAttributes::ArmorPenetration, ArmorPenetration);
-        AttributeMap.Add(AuraAttributes::BlockChance, BlockChance);
-
-        // Attack Attributes
-        AttributeMap.Add(AuraAttributes::CriticalHitChance, CriticalHitChance);
-        AttributeMap.Add(AuraAttributes::CriticalHitDamage, CriticalHitDamage);
-        AttributeMap.Add(AuraAttributes::CriticalHitResistance, CriticalHitResistance);
-
-        // Vital Attributes
-        AttributeMap.Add(AuraAttributes::Health, Health);
-        AttributeMap.Add(AuraAttributes::MaxHealth, MaxHealth);
-        AttributeMap.Add(AuraAttributes::HealthRegen, HealthRegen);
-        AttributeMap.Add(AuraAttributes::Mana, Mana);
-        AttributeMap.Add(AuraAttributes::MaxMana, MaxMana);
-        AttributeMap.Add(AuraAttributes::ManaRegen, ManaRegen);
-    }
 
     UFUNCTION()
     void OnRep_ReplicationTrampoline(FAngelscriptGameplayAttributeData& OldAttributeData)
@@ -160,47 +98,21 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
         OnRep_Attribute(OldAttributeData);
     }
 
-    FAngelscriptGameplayAttributeData& GetAttribute(FName AttributeName)
-    {
-        if (AttributeMap.Contains(AttributeName))
-        {
-            return AttributeMap[AttributeName];
-        }
-
-        check(false);
-        return Health;
-    }
-
-    const TArray<FAngelscriptGameplayAttributeData>& GetPrimaryAttributes()
-    {
-        return PrimaryAttributes;
-    }
-
-    const TArray<FAngelscriptGameplayAttributeData>& GetSecondaryAttributes()
-    {
-        return SecondaryAttributes;
-    }
-
-    const TMap<FName, FAngelscriptGameplayAttributeData>& GetAllAttributes()
-    {
-        return AttributeMap;
-    }
-
     // Epic suggests that only should clamp the value in PreAttributeChange,
     // don't execute complex logic in this function, eg: ApplyGameplayEffect
     UFUNCTION(BlueprintOverride)
     void PreAttributeChange(FGameplayAttribute Attribute, float32& NewValue)
     {
-        ClampAttribute(Attribute, NewValue);
+        // ClampAttribute(Attribute, NewValue);
     }
 
     void ClampAttribute(FGameplayAttribute Attribute, float32& NewValue)
     {
-        if (Attribute.AttributeName == AuraAttributes::Health)
+        if (Attribute.AttributeName == AuraAttributes::Health || Attribute.AttributeName == AuraAttributes::MaxHealth)
         {
             NewValue = Math::Clamp(NewValue, float32(0), MaxHealth.GetCurrentValue());
         }
-        else if (Attribute.AttributeName == AuraAttributes::Mana)
+        else if (Attribute.AttributeName == AuraAttributes::Mana || Attribute.AttributeName == AuraAttributes::MaxMana)
         {
             NewValue = Math::Clamp(NewValue, float32(0), MaxMana.GetCurrentValue());
         }
@@ -209,21 +121,6 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     UFUNCTION(BlueprintOverride)
     void PostGameplayEffectExecute(FGameplayEffectSpec EffectSpec, FGameplayModifierEvaluatedData& EvaluatedData, UAngelscriptAbilitySystemComponent TargetASC)
     {
-        auto& AttributeData = GetAttribute(FName(EvaluatedData.GetAttribute().AttributeName));
-        float32 BaseValue = AttributeData.GetBaseValue();
-        ClampAttribute(EvaluatedData.GetAttribute(), BaseValue);
-
-        if (BaseValue != AttributeData.GetBaseValue())
-        {
-            AttributeData.SetBaseValue(BaseValue);
-        }
-
-        Print(f"PostGameplayEffectExecute: {EffectSpec.GetLevel()}");
-        FEffectProperties Props;
-        GetEffectProperties(Props, EffectSpec, TargetASC);
-
-        // This event is broadcasted by OnGameplayEffectAppliedDelegateToSelf.Brocast() in the course.
-        // Because there is no OnGameplayEffectAppliedDelegateToSelf in the Angelscript, so I just call this function via PostGameplayEffectExecute.
         OnGameplayEffectAppliedEvent.Broadcast(EffectSpec, EvaluatedData, TargetASC);
     }
 
