@@ -123,8 +123,9 @@ class AAuraPlayerController : AAuraPlayerControllerBase
         {
             AuraCharacter.AbilitySystem.InitAbilityActorInfo(AuraCharacter, AuraCharacter);
             UAuraAttributeSet AuraAttributeSet = Cast<UAuraAttributeSet>(AuraCharacter.AbilitySystem.RegisterAttributeSet(UAuraAttributeSet));
-            AuraCharacter.InitializePrimaryAttributes();
-            AuraCharacter.InitializeSecondaryAttributes();
+
+            // 请求服务端 使用GE 进行属性初始化操作
+            AuraCharacter.Server_InitializeAttributesByGameplayEffects();
 
             AAuraHUD AuraHUD = Cast<AAuraHUD>(GetHUD());
             if (IsValid(AuraHUD))

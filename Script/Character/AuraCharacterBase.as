@@ -14,6 +14,9 @@ class AAuraCharacterBase : AAngelscriptGASCharacter
     UPROPERTY(Category = "Attributes")
     TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
 
+    UPROPERTY(Category = "Attributes")
+    TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+
     void InitializePrimaryAttributes()
     {
         if (IsValid(DefaultPrimaryAttributes))
@@ -27,6 +30,14 @@ class AAuraCharacterBase : AAngelscriptGASCharacter
         if (IsValid(DefaultSecondaryAttributes))
         {
             AuraUtil::ApplyGameEffect(this, this, DefaultSecondaryAttributes);
+        }
+    }
+
+    void InitializeVitalAttributes()
+    {
+        if (IsValid(DefaultVitalAttributes))
+        {
+            AuraUtil::ApplyGameEffect(this, this, DefaultVitalAttributes);
         }
     }
 

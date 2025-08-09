@@ -43,8 +43,14 @@ class AAuraCharacter : AAuraCharacterBase
     {
         AbilitySystem.InitAbilityActorInfo(this, this);
         AbilitySystem.RegisterAttributeSet(UAuraAttributeSet);
+    }
+
+    UFUNCTION(Server)
+    void Server_InitializeAttributesByGameplayEffects()
+    {
         InitializePrimaryAttributes();
         InitializeSecondaryAttributes();
+        InitializeVitalAttributes();
     }
 
     UFUNCTION()
