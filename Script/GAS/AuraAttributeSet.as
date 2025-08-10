@@ -103,16 +103,16 @@ class UAuraAttributeSet : UAngelscriptAttributeSet // 天使脚本属性集
     UFUNCTION(BlueprintOverride)
     void PreAttributeChange(FGameplayAttribute Attribute, float32& NewValue)
     {
-        // ClampAttribute(Attribute, NewValue);
+        ClampAttribute(Attribute, NewValue);
     }
 
     void ClampAttribute(FGameplayAttribute Attribute, float32& NewValue)
     {
-        if (Attribute.AttributeName == AuraAttributes::Health || Attribute.AttributeName == AuraAttributes::MaxHealth)
+        if (Attribute.AttributeName == AuraAttributes::Health)
         {
             NewValue = Math::Clamp(NewValue, float32(0), MaxHealth.GetCurrentValue());
         }
-        else if (Attribute.AttributeName == AuraAttributes::Mana || Attribute.AttributeName == AuraAttributes::MaxMana)
+        else if (Attribute.AttributeName == AuraAttributes::Mana)
         {
             NewValue = Math::Clamp(NewValue, float32(0), MaxMana.GetCurrentValue());
         }

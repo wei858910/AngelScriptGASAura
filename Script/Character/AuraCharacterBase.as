@@ -37,7 +37,7 @@ class AAuraCharacterBase : AAngelscriptGASCharacter
     {
         if (IsValid(DefaultVitalAttributes))
         {
-            AuraUtil::ApplyGameEffect(this, this, DefaultVitalAttributes);
+            AuraUtil::ApplyGameEffect(this, this, DefaultVitalAttributes, CombatComponent.GetLevel());
         }
     }
 
