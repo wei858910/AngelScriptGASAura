@@ -122,7 +122,8 @@ class AAuraPlayerController : AAuraPlayerControllerBase
         if (IsValid(AuraCharacter))
         {
             AuraCharacter.AbilitySystem.InitAbilityActorInfo(AuraCharacter, AuraCharacter);
-            UAuraAttributeSet AuraAttributeSet = Cast<UAuraAttributeSet>(AuraCharacter.AbilitySystem.RegisterAttributeSet(UAuraAttributeSet));
+            UAuraAttributeSet InAuraAttributeSet = Cast<UAuraAttributeSet>(AuraCharacter.AbilitySystem.RegisterAttributeSet(UAuraAttributeSet));
+            AuraCharacter.SetAuraAttributeSet(InAuraAttributeSet);
 
             // 请求服务端 使用GE 进行属性初始化操作
             AuraCharacter.Server_InitializeAttributesByGameplayEffects();
@@ -130,7 +131,7 @@ class AAuraPlayerController : AAuraPlayerControllerBase
             AAuraHUD AuraHUD = Cast<AAuraHUD>(GetHUD());
             if (IsValid(AuraHUD))
             {
-                AuraHUD.InitOverlay(this, PlayerState, AuraCharacter.AbilitySystem, AuraAttributeSet);
+                AuraHUD.InitOverlay(this, PlayerState, AuraCharacter.AbilitySystem, InAuraAttributeSet);
             }
         }
     }

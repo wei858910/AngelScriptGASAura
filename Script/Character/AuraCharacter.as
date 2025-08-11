@@ -9,6 +9,9 @@ class AAuraCharacter : AAuraCharacterBase
     UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
     int32 Level = 1; // 角色等级
 
+    UPROPERTY()
+    private UAuraAttributeSet AuraAttributeSet;
+
     default Camera.bUsePawnControlRotation = false;
 
     default SpringArm.SetRelativeRotation(FRotator(-45, 0, 0));
@@ -42,7 +45,17 @@ class AAuraCharacter : AAuraCharacterBase
     void Possessed(AController NewController)
     {
         AbilitySystem.InitAbilityActorInfo(this, this);
-        AbilitySystem.RegisterAttributeSet(UAuraAttributeSet);
+        AuraAttributeSet = Cast<UAuraAttributeSet>(AbilitySystem.RegisterAttributeSet(UAuraAttributeSet));
+    }
+
+    UAuraAttributeSet GetAuraAttributeSet()
+    {
+        return AuraAttributeSet;
+    }
+
+    void SetAuraAttributeSet(UAuraAttributeSet& InAuraAttributeSet)
+    {
+        AuraAttributeSet = InAuraAttributeSet;
     }
 
     UFUNCTION(Server)

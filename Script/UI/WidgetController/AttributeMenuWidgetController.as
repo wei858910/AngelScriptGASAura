@@ -1,0 +1,4 @@
+class UAttributeMenuWidgetController : UAuraWidgetController
+{
+    
+};

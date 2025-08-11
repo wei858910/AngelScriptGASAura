@@ -12,6 +12,12 @@ class AAuraHUD : AHUD
     UPROPERTY()
     TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
 
+    UPROPERTY(NotEditable)
+    UAttributeMenuWidgetController AttributeMenuWidgetController;
+
+    UPROPERTY()
+    TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
+
     UOverlayWidgetController GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams)
     {
         if (OverlayWidgetController == nullptr)
@@ -23,6 +29,19 @@ class AAuraHUD : AHUD
             }
         }
         return OverlayWidgetController;
+    }
+
+    UAttributeMenuWidgetController GetAttributeMenuWidgetController(const FWidgetControllerParams& WidgetControllerParams)
+    {
+        if (AttributeMenuWidgetController == nullptr)
+        {
+            AttributeMenuWidgetController = NewObject(this, AttributeMenuWidgetControllerClass);
+            if (IsValid(AttributeMenuWidgetController))
+            {
+                AttributeMenuWidgetController.SetWidgetControllerParams(WidgetControllerParams);
+            }
+        }
+        return AttributeMenuWidgetController;
     }
 
     void InitOverlay(APlayerController PlayerController, APlayerState PlayerState, UAngelscriptAbilitySystemComponent AbilitySystemComponent, UAuraAttributeSet AttributeSet)

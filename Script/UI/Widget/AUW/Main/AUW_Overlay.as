@@ -33,7 +33,8 @@ class UAUW_Overlay : UAuraUserWidget
         UAUW_AttributeMenu AttributeMenu = Cast<UAUW_AttributeMenu>(WidgetUtil::OpenWidget(n"AttributeMenu", WidgetController.PlayerController, FVector2D(30.f, 30.f)));
         if (IsValid(AttributeMenu))
         {
-            AttributeMenu.SetWidgetController(WidgetController);
+            UAttributeMenuWidgetController AttributeMenuWidgetController = WidgetControllerMgr::GetAttributeMenuWidgetController();
+            AttributeMenu.SetWidgetController(AttributeMenuWidgetController);
             WBP_WideButton_Attributes.SetIsEnabled(false);
         }
     }
