@@ -1,27 +1,8 @@
 namespace WidgetControllerMgr
 {
-    FWidgetControllerParams GetWidgetControllerParams()
-    {
-        APlayerController PC = Gameplay::GetPlayerController(0);
-        if (IsValid(PC))
-        {
-            AAuraPlayerState PS = Cast<AAuraPlayerState>(PC.PlayerState);
-            AAuraCharacter AuraCharacter = Cast<AAuraCharacter>(PC.GetControlledPawn());
-            UAngelscriptAbilitySystemComponent ASC;
-            if (IsValid(AuraCharacter))
-            {
-                ASC = AuraCharacter.AbilitySystem;
-                UAuraAttributeSet AS = AuraCharacter.GetAuraAttributeSet();
-
-                return FWidgetControllerParams(PC, PS, ASC, AS);
-            }
-        }
-        return FWidgetControllerParams();
-    }
-
     UOverlayWidgetController GetOverlayWidgetController()
     {
-        FWidgetControllerParams WidgetControllerParams = GetWidgetControllerParams();
+        FWidgetControllerParams WidgetControllerParams = AuraUtil::GameInstance().GetWidgetControllerParams();
 
         APlayerController PC = Gameplay::GetPlayerController(0);
         if (IsValid(PC))
@@ -38,7 +19,7 @@ namespace WidgetControllerMgr
 
     UAttributeMenuWidgetController GetAttributeMenuWidgetController()
     {
-        FWidgetControllerParams WidgetControllerParams = GetWidgetControllerParams();
+        FWidgetControllerParams WidgetControllerParams = AuraUtil::GameInstance().GetWidgetControllerParams();
 
         APlayerController PC = Gameplay::GetPlayerController(0);
         if (IsValid(PC))

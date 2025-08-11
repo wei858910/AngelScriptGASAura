@@ -44,7 +44,7 @@ class AAuraHUD : AHUD
         return AttributeMenuWidgetController;
     }
 
-    void InitOverlay(APlayerController PlayerController, APlayerState PlayerState, UAngelscriptAbilitySystemComponent AbilitySystemComponent, UAuraAttributeSet AttributeSet)
+    void InitOverlay()
     {
         check(OverlayWidgetClass != nullptr);
         check(OverlayWidgetControllerClass != nullptr);
@@ -53,7 +53,7 @@ class AAuraHUD : AHUD
 
         if (IsValid(OverlayWidget))
         {
-            const FWidgetControllerParams WidgetControllerParams(PlayerController, PlayerState, AbilitySystemComponent, AttributeSet);
+            const FWidgetControllerParams WidgetControllerParams = AuraUtil::GameInstance().GetWidgetControllerParams();
             UOverlayWidgetController InWidgetController = GetOverlayWidgetController(WidgetControllerParams);
             OverlayWidget.SetWidgetController(InWidgetController);
 
